@@ -1,6 +1,7 @@
 import React from 'react'
 import PriceList from './components/PriceList'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ViewTab from './components/ViewTab'
 
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
         'id':'1',
         'name':'旅游',
         'type':'outcome',
-        'iconName':"ios-plane"
+        'iconName':"cable-car"
       }
     },
     {
@@ -27,7 +28,7 @@ export default function App() {
         'id':'1',
         'name':'旅游',
         'type':'outcome',
-        'iconName':"ios-plane"
+        'iconName':"cable-car"
       }
     },
 
@@ -38,6 +39,10 @@ export default function App() {
         items={items}
          onModifyItem={(item) => {alert(item.id)}}
          onDeleteItem={(item) => {alert(item.id)}}
+      />
+      <ViewTab 
+        activeTab="chart"
+        onTabChange={(view) => {console.log(view)}}
       />
     </div>
   )

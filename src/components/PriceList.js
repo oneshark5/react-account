@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import 'boxicons'
+// 添加PropTypes属性进行类型检查
+import PropTypes from 'prop-types'
 
-
-export default function PriceList({ items, onModifyItem, onDeleteItem }) {
+function PriceList({ items, onModifyItem, onDeleteItem }) {
   return (
+
     <ul className='list-group list-grop-flush'>
       {
         items.map((item) => (
@@ -12,20 +15,11 @@ export default function PriceList({ items, onModifyItem, onDeleteItem }) {
           ">
             {/* 分类 */}
             <span className="col-1 badge-primary">
-              {/* <Ionicon
-                className='rounded-circle'
-                fontSize='30px'
-                style={{backgroundColor:'#007bff', padding:'5px'}}
-                color={'#fff'}
-                icon={item.category.iconName}
-              /> */}
-              {/* <LogoNodejs
-                color={'#00000'}
-                rotate
-                height="250px"
-                width="250px"
-                onClick={() => alert('Hi!')}
-              /> */}
+            <box-icon 
+            type='solid' name={item.category.iconName}
+            size='25px' color='blue'
+            />
+              
             </span>
             {/* title */}
             <span className="col-5">{item.title}</span>
@@ -38,19 +32,39 @@ export default function PriceList({ items, onModifyItem, onDeleteItem }) {
             {/* 日期 */}
             <span className="col-2">{item.date}</span>
 
-            <button className="col-1 btn btn-primary"
-              onClick={() => {onModifyItem(item)}}
+            {/* 编辑 */}
+            <a className="col-1 btn"
+              onClick={() => { onModifyItem(item) }}
             >
-              编辑
-            </button>
-            <button className="col-1 btn btn-danger"
-              onClick={() => {onDeleteItem(item)}}
+            <box-icon name='edit-alt'
+              className="rounded-circle"
+              type='solid' size='25px' color='#28a745'
+            ></box-icon>
+            {/* 删除 */}
+            </a>
+            <a className="col-1 btn"
+              onClick={() => { onDeleteItem(item) }}
             >
-              删除
-            </button>
+            <box-icon name='hide'
+              type='solid' size='25px' color='#dc3545'
+            ></box-icon>
+            </a>
           </li>
         ))
       }
     </ul>
   )
 }
+
+// 添加属性检查
+PriceList.propTypes = {
+  item:PropTypes.array.isRequired,
+  onModifyItem:PropTypes.func.isRequired,
+  onDeleteItem:PropTypes.func.isRequired,
+}
+// 添加默认属性
+PriceList.propTypes = {
+  onModifyItem: () => {}
+}
+
+export default PriceList

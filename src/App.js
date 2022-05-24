@@ -2,6 +2,7 @@ import React from 'react'
 import PriceList from './components/PriceList'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ViewTab from './components/ViewTab'
+import MonthPicker from './components/MonthPicker'
 
 
 export default function App() {
@@ -44,6 +45,12 @@ export default function App() {
         activeTab="chart"
         onTabChange={(view) => {console.log(view)}}
       />
+      <MonthPicker
+        year={2022}
+        month={5}
+        onChange={(year, month) => console.log(year, month)}
+      />
     </div>
   )
 }
+ 

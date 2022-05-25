@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { equal, padLeft } from '../utility'
@@ -8,14 +8,29 @@ function MonthPicker(props) {
   // 解构
   const { year, month, onChange } = props
 
-  const monthRange = range(12, 1)
-  const yearRange = range(9, -4).map(number => number + year)
-
-
   // 添加状态 下拉菜单、年份高亮、月份
   const [isOpen, setisOpen] = useState(false)
   const [selectedYear, setselectedYear] = useState(year)
   const [selectedMon, setselectedMon] = useState(month)
+  const nodeRef = useRef()
+
+  const monthRange = range(12, 1)
+  const yearRange = range(9, -4).map(number => number + year)
+
+  // // 副作用函数---处理点击空白区域关闭组件
+  // useEffect(() => {
+  //   // 给click添加点击监听事件
+  //   document.addEventListener('click', handleClick, false)
+  // })
+  // const handleClick = (event) => {
+  //   console.log(nodeRef.current);
+  //   console.log(event.target);
+  //   // 逻辑：点击就触发，当
+  //   if(nodeRef.contains(event.target)){
+  //     return
+  //   }
+  //   setisOpen(false)
+  // }
 
   // 事件处理函数
   const selectYear = (yearNumber) => {
@@ -33,7 +48,7 @@ function MonthPicker(props) {
   }
 
   return (
-    <div className='dropdown month-picker-component'>
+    <div className='dropdown month-picker-component' ref={nodeRef} >
       <h4>选择月份</h4>
       {/* btn-lg大小 btn-secondary灰色 dropdown-toggle */}
       <button className='btn btn-lg btn-secondary dropdown-toggle'

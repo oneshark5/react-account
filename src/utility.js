@@ -33,3 +33,23 @@ export const parseToYearAndMonth = (str) => {
     month:date.getMonth()+1
   }
 }
+
+// 有效的日期格式
+export const isValidDate = (dateString) => {
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;//正则表达式
+  if(!dateString.match(regEx)) return false;  // Invalid format
+  const d = new Date(dateString);
+  if(Number.isNaN(d.getTime())) return false; // Invalid date
+  return d.toISOString().slice(0,10) === dateString;
+}
+
+
+export const Colors = {
+  blue: '#347eff',
+  deepBlue: '#61dafb',
+  green: '#28a745',
+  red: '#dc3545',
+  gray: '#555',
+  lightGray: '#efefef',
+  white: '#fff',
+}

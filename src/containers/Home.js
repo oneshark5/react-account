@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 // import logo from '../logo.svg'
 // import { TYPE_INCOME, TYPE_INCOME, LIST_VIEW, CHART_VIEW, padLeft, range, equal } from '../utility'
 import { TYPE_INCOME, TYPE_OUTCOME, LIST_VIEW, CHART_VIEW, parseToYearAndMonth, padLeft } from '../utility'

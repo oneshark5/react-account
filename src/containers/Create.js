@@ -6,16 +6,22 @@ import PriceForm from '../components/PriceForm'
 export default function Create() {
   const params = useParams()
   return (
-    <div className='create-page py-3 px-3 rounded mt-3' style={{background: '#fff'}}>
+    <div className='create-page py-3 px-3 rounded mt-3' style={{ background: '#fff' }}>
+      {/* 采用了插槽 */}
+      <Tabs activeIndex={tabIndex} onTabChange={this.tabChange}>
+        <Tab>支出</Tab>
+        <Tab>收入</Tab>
+      </Tabs>
+
       {/* <CategorySelect
         
       /> */}
-      
-      <PriceForm 
+
+      {/* <PriceForm 
           onFormSubmit={submitForm}
           onCancelSubmit={cancelSubmit}
           item={editItem}
-        />
+        /> */}
     </div>
   )
 }

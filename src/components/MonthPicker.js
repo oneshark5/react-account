@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { equal, padLeft } from '../utility'
@@ -21,9 +21,11 @@ function MonthPicker(props) {
   const selectYear = (yearNumber) => {
     setselectedYear(yearNumber)
   }
+
   const selectMonth = (event, monthNumber) => {
     // 添加event，清除响应事件默认行为
     event.preventDefault()
+    setselectedMon(monthNumber)//
     // 一、关闭下拉菜单
     setisOpen(false)
     // 二、根据改变，MonthPicker做出响应改变---🦈子传父---由调用父组件的回调函数实现
@@ -60,6 +62,7 @@ function MonthPicker(props) {
                 )
               }
             </div>
+            {/* ==============月========== */}
             <div className="col">
               {
                 monthRange.map((monthNumber, index) =>

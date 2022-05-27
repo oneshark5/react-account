@@ -13,18 +13,25 @@ import Create from './containers/Create'
 export const AppContext = React.createContext('')
 
 export default function App() {
-  // 添加状态
+  // 添加状态---定义数据
   const [states, setstates] = useState({
     items:flatternArr(testItems),
     categories:flatternArr(testCategories)
   })
+  console.log(states.items);
 
   // 删除变量
   const actions = {
+    // const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
+    // setitemdb(filteredItems)
     deleteItem:(item) => {
-      delete states.items[item.id]
-      setstates(states.items)
+
+    },
+    createItem:(data, categoryId) => {
+      console.log(data);
+      console.log(categoryId);
     }
+
   }
 
   // const [categories, setcategories] = useState(flatternArr(testCategories))

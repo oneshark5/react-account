@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
-
+// import logo from '../logo.svg'
+// import { TYPE_INCOME, TYPE_INCOME, LIST_VIEW, CHART_VIEW, padLeft, range, equal } from '../utility'
 import { TYPE_INCOME, TYPE_OUTCOME, LIST_VIEW, CHART_VIEW, parseToYearAndMonth, padLeft } from '../utility'
 
 import PriceList from '../components/PriceList'
@@ -8,38 +9,41 @@ import ViewTab from '../components/ViewTab'
 import MonthPicker from '../components/MonthPicker'
 import TotalPrice from '../components/TotalPrice'
 import CreateBtn from '../components/CreateBtn'
-import { Tabs, Tab } from './components/Tabs'
+
+// import { Tabs, Tab } from './components/Tabs'
+
 import { AppContext } from '../App'
 import { useNavigate } from 'react-router-dom'
 
+const tabsText = [LIST_VIEW, CHART_VIEW]
 
 const Home = (props) => {
-  const tabsText = [LIST_VIEW, CHART_VIEW]
   // 定义状态
   const [currentDate, setcurrentDate] = useState(parseToYearAndMonth('2022/05/27'))//注意：在测试时，把这个初始时间写死，以防测试时每次都不同
   const [tabView, settabView] = useState(tabsText[0])
 
+  // 重定向
   const navigate = useNavigate()
 
-  // // 使用Context---useContext方法
-  // const { states, actions } = useContext(AppContext)
-  // const [items, categories] = states
-  // // 数据处理
-  // const itemsWithCategory = Object.keys(items).map(id => {
-  //   items[id].category = categories[items[id].cid]
-  //   return items[id]
-  // }).filter(item => {
-  //   return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
-  // })
-  // // 计算收入和支出总和
-  // let totalIncome = 0, totalOutcome = 0
-  // itemsWithCategory.forEach(item => {
-  //   if (item.category.type === TYPE_OUTCOME) {
-  //     totalOutcome += item.price
-  //   } else {
-  //     totalIncome += item.price
-  //   }
-  // })
+  // 使用Context---useContext方法
+  const { states, actions } = useContext(AppContext)
+  const [items, categories] = states
+  // 数据处理
+  const itemsWithCategory = Object.keys(items).map(id => {
+    items[id].category = categories[items[id].cid]
+    return items[id]
+  }).filter(item => {
+    return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
+  })
+  // 计算收入和支出总和
+  let totalIncome = 0, totalOutcome = 0
+  itemsWithCategory.forEach(item => {
+    if (item.category.type === TYPE_OUTCOME) {
+      totalOutcome += item.price
+    } else {
+      totalIncome += item.price
+    }
+  })
   // ===========================🦈数据交互===================//
   // ？？？？？事件处理函数
   // 实现列表模式
@@ -50,13 +54,28 @@ const Home = (props) => {
     setcurrentDate({ year, month })
   }
 
+  // 编辑---价格列表:跳转到create界面
   const modifyItem = (item) => {
+    // // 遍历整个数据，找到对应的要更改的数据，然后修改title
+    // const modifiedItems = itemdb.map((item) => {
+    //   if (item.id === modifiedItem.id) {
+    //     return { ...item, title: '该标题被更新' }
+    //   } else {
+    //     return item
+    //   }
+    // })
+    // // 更新后，重新设置状态
+    // setitemdb(modifiedItems)
+
+    // 跳转编辑页面
     navigate(`/edit/${item.id}`)
   }
 
+  // 添加数据:跳转到create界面
   const createItem = () => {
-
-    navigate('/create')
+    // setitemdb([newItem, ...itemdb])
+    // 采用navigate实现跳转
+    navigate('/create')//实现跳转
   }
 
   // 删除数据：两种方法，一是采用splice，二是采用函数式的方法
@@ -107,24 +126,24 @@ const Home = (props) => {
       </header>
 
       <div className="content-area py-3 px-3">
-        
-        {/* Tabs示范 */}
-        <Tabs acctiveIndex={0} onTabChange={() => {}}>
-          <Tab>1st item</Tab>
-          <Tab>2st item</Tab>
-        </Tabs>
+        {/* 模式 */}
+
+        {/* 采用Tabs */}
+        {/* <Tabs activeIndex={0} onTabChange={()=>{}}>
+                  <Tab>1st item</Tab>
+                  <Tab>2st item</Tab>
+                </Tabs> */}
 
         <ViewTab
           activeTab={tabView} onTabChange={changeView}
         />
-
         {/* 创建按钮 */}
         <CreateBtn
           onClick={createItem}
         />
         {/* 数据列表：根据模式变化 */}
         {
-          tabView === LIST_VIEW && itemsWithCategory.length > 0 &&
+          tabView === LIST_VIEW &&
           <PriceList
             items={itemsWithCategory}
             onModifyItem={modifyItem}
@@ -132,14 +151,8 @@ const Home = (props) => {
           />
         }
         {
-          tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
-          <div className='alert alert-light text-center'>
-            您还没有任何记账记录
-          </div>
-        }
-        {
           tabView === CHART_VIEW &&
-          <h1 className='chart-title'>图表区域</h1>
+          <h1>图标区域</h1>
         }
       </div>
     </React.Fragment>

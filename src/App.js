@@ -1,6 +1,7 @@
 import React from 'react'
 import Home from './containers/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { testItems, testCategories } from './testDate'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Create from './containers/Create'

@@ -43,6 +43,10 @@ export const isValidDate = (dateString) => {
   return d.toISOString().slice(0,10) === dateString;
 }
 
+// 将数组铺平flattern---reduce()方法；reduce(prvVal, curVal)
+export const flattern = {
+  
+}
 
 export const Colors = {
   blue: '#347eff',

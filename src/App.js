@@ -18,10 +18,19 @@ export default function App() {
     items:flatternArr(testItems),
     categories:flatternArr(testCategories)
   })
+
+  // 删除变量
+  const actions = {
+    deleteItem:(item) => {
+      delete states.items[item.id]
+      setstates(states.items)
+    }
+  }
+
   // const [categories, setcategories] = useState(flatternArr(testCategories))
 
   return (
-    <AppContext.Provider value={{states}}>
+    <AppContext.Provider value={{states, actions }}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />

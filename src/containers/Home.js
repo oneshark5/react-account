@@ -13,6 +13,7 @@ import CreateBtn from '../components/CreateBtn'
 // import { Tabs, Tab } from './components/Tabs'
 
 import { AppContext } from '../App'
+import { useNavigate } from 'react-router-dom'
 
 // 定义的数据可以放在外面，因为数据本就是函数对象
 // ===========================🦈原始数据===================//
@@ -58,11 +59,15 @@ const newItem = {
   'cid': 1
 }
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props.action);
   // 定义状态
   const [itemdb, setitemdb] = useState(items)
   const [currentDate, setcurrentDate] = useState(parseToYearAndMonth)//注意：在测试时，把这个初始时间写死，以防测试时每次都不同
   const [tabView, settabView] = useState(LIST_VIEW)
+
+  // 重定向
+  const navigate = useNavigate()
 
   // ===========================🦈数据处理===================//
   // 缺点---每次渲染都会处理一遍数据 
@@ -91,23 +96,28 @@ export default function Home() {
     setcurrentDate({ year, month })
   }
 
-  // 编辑---只编辑title
-  const modifyItem = (modifiedItem) => {
-    // 遍历整个数据，找到对应的要更改的数据，然后修改title
-    const modifiedItems = itemdb.map((item) => {
-      if (item.id === modifiedItem.id) {
-        return { ...item, title: '该标题被更新' }
-      } else {
-        return item
-      }
-    })
-    // 更新后，重新设置状态
-    setitemdb(modifiedItems)
+  // 编辑---价格列表
+  const modifyItem = (item) => {
+    // // 遍历整个数据，找到对应的要更改的数据，然后修改title
+    // const modifiedItems = itemdb.map((item) => {
+    //   if (item.id === modifiedItem.id) {
+    //     return { ...item, title: '该标题被更新' }
+    //   } else {
+    //     return item
+    //   }
+    // })
+    // // 更新后，重新设置状态
+    // setitemdb(modifiedItems)
+
+    // 跳转编辑页面
+    navigate(`/edit/${item.id}`)
   }
 
   // 添加数据
   const createItem = () => {
-    setitemdb([newItem, ...itemdb])
+    // setitemdb([newItem, ...itemdb])
+    // 采用navigate实现跳转
+    navigate('/create')//实现跳转
   }
 
   // 删除数据：两种方法，一是采用splice，二是采用函数式的方法
@@ -127,14 +137,17 @@ export default function Home() {
 
   // 方法二：采用filter
   const deleteItem = (deletedItem) => {
-    // 将不删除的元素筛选出来
-    const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
-    setitemdb(filteredItems)
+    // // 将不删除的元素筛选出来
+    // const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
+    // setitemdb(filteredItems)
+
+
+
   }
 
-  // 使用Context
-  const state = useContext(AppContext)
-  console.log(state);
+  // 使用Context---useContext方法
+  const value = useContext(AppContext)
+  console.log(value);
 
   return (
     <>

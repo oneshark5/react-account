@@ -8,17 +8,21 @@ import  {AppContext}  from '../App'
 import { testCategories, testItems } from '../testDate'
 import { TYPE_OUTCOME } from '../utility'
 import PriceForm from '../components/PriceForm'
+import withContext from '../withContext'
 
 
-export default function Create() {
+function Create(props) {
   // const params = useParams()
   const filterCategories = testCategories.filter(category => category.type === TYPE_OUTCOME)
+
+  const {data} = props
+  console.log(data);//输出为什么是undefined
   return (
-    <AppContext.Consumer>
-      {
-        (state) => {
-          console.log(state)
-          return (
+    // <AppContext.Consumer>
+    //   {
+    //     (state) => {
+    //       console.log(state)
+    //       return (
             <div className='create-page py-3 px-3 rounded mt-3' style={{ background: '#fff' }}>
               {/* 采用了插槽 */}
               <Tabs activeIndex={0} onTabChange={() => { }}>
@@ -37,14 +41,13 @@ export default function Create() {
                 item={testItems}
               />
             </div>
-          )
-        }
-      }
-    </AppContext.Consumer>
-
+    //       )
+    //     }
+    //   }
+    // </AppContext.Consumer>
   )
 }
 
-
+export default withContext(Create)
 
 

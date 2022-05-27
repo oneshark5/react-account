@@ -7,13 +7,13 @@ export const testCategories = [
   },
   {
     'id': '2',
-    'name': '旅游',
+    'name': '出行',
     'type': 'outcome',
     'iconName': "cable-car"
   },
   {
     'id': '3',
-    'name': '旅游',
+    'name': '食品',
     'type': 'outcome',
     'iconName': "cable-car"
   },
@@ -27,8 +27,8 @@ export const testCategories = [
 
 export const testItems = [
   {
-    'id': '1',
-    'title': '===北京旅游==',
+    'id': '_zasdbuzhid',
+    'title': '北京旅游==',
     'price': 2000,
     'date': '2022-05-24',
     "monthCategory":'2022-05',
@@ -36,8 +36,8 @@ export const testItems = [
     'timestamp':1485949
   },
   {
-    'id': '1',
-    'title': '===是v阿发==',
+    'id': '_zanygfuzhid',
+    'title': '是v阿发==',
     'price': 2000,
     'date': '2022-05-24',
     "monthCategory":'2022-05',
@@ -45,8 +45,8 @@ export const testItems = [
     'timestamp':1485949
   },
   {
-    'id': '1',
-    'title': '===阿萨法发==',
+    'id': '_zanywertuz',
+    'title': '阿萨法发==',
     'price': 2000,
     'date': '2022-05-24',
     "monthCategory":'2022-05',
@@ -55,8 +55,8 @@ export const testItems = [
   },
 
   {
-    'id': '1',
-    'title': '===撒大啊昂==',
+    'id': '_dfghbuzhid',
+    'title': '撒大啊昂==',
     'price': 2000,
     'date': '2022-05-24',
     "monthCategory":'2022-05',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 // import logo from '../logo.svg'
 // import { TYPE_INCOME, TYPE_INCOME, LIST_VIEW, CHART_VIEW, padLeft, range, equal } from '../utility'
 import { TYPE_INCOME, TYPE_OUTCOME, LIST_VIEW, CHART_VIEW, parseToYearAndMonth, padLeft } from '../utility'
@@ -10,49 +10,53 @@ import MonthPicker from '../components/MonthPicker'
 import TotalPrice from '../components/TotalPrice'
 import CreateBtn from '../components/CreateBtn'
 
+// import { Tabs, Tab } from './components/Tabs'
+
+import { AppContext } from '../App'
+
 // 定义的数据可以放在外面，因为数据本就是函数对象
 // ===========================🦈原始数据===================//
-  // 数据结构 
-  const categories = {
-    "1":{
-      'id': '1',
-      'name': '旅游',
-      'type': 'outcome',
-      'iconName': "cable-car"
-    },
-    "2":{
-      'id': '2',
-      'name': '理财',
-      'type': 'income',
-      'iconName': "cable-car"
-    }
+// 数据结构 
+const categories = {
+  "1": {
+    'id': '1',
+    'name': '旅游',
+    'type': 'outcome',
+    'iconName': "cable-car"
+  },
+  "2": {
+    'id': '2',
+    'name': '理财',
+    'type': 'income',
+    'iconName': "cable-car"
   }
+}
 
-  const items = [
-    {
-      'id': '1',
-      'title': '北京旅游',
-      'price': 2000,
-      'date': '2022-05-24',
-      'cid':1
-    },
-    {
-      'id': '2',
-      'title': '理财收入',
-      'price': 1000,
-      'date': '2022-05-25',
-      'cid':2
-    },
-  ]
+const items = [
+  {
+    'id': '1',
+    'title': '北京旅游',
+    'price': 2000,
+    'date': '2022-05-24',
+    'cid': 1
+  },
+  {
+    'id': '2',
+    'title': '理财收入',
+    'price': 1000,
+    'date': '2022-05-25',
+    'cid': 2
+  },
+]
 
-  // 新建记录数据
-  const newItem = {
-    'id':4,
-    'title':'新添加的项目',
-    'price':300,
-    'date':'2022-06-01',
-    'cid':1
-  }
+// 新建记录数据
+const newItem = {
+  'id': 4,
+  'title': '新添加的项目',
+  'price': 300,
+  'date': '2022-06-01',
+  'cid': 1
+}
 
 export default function Home() {
   // 定义状态
@@ -60,22 +64,22 @@ export default function Home() {
   const [currentDate, setcurrentDate] = useState(parseToYearAndMonth)//注意：在测试时，把这个初始时间写死，以防测试时每次都不同
   const [tabView, settabView] = useState(LIST_VIEW)
 
-    // ===========================🦈数据处理===================//
-    // 缺点---每次渲染都会处理一遍数据 
-    // 处理数据结构，将items和category链接---⭐然后过滤出选择月份对应的记录
-    const itemsWithCategory = itemdb.map(item => {
-      item.category = categories[item.cid]
-      return item
-    }).filter(item => {
-      return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
-    })
+  // ===========================🦈数据处理===================//
+  // 缺点---每次渲染都会处理一遍数据 
+  // 处理数据结构，将items和category链接---⭐然后过滤出选择月份对应的记录
+  const itemsWithCategory = itemdb.map(item => {
+    item.category = categories[item.cid]
+    return item
+  }).filter(item => {
+    return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
+  })
 
-    // 计算收入和之处总和
-    let totalIncome = 0, totalOutcome = 0;
-    itemsWithCategory.forEach(item => {
-      if(item.category.type === TYPE_INCOME) totalIncome += item.price
-      else if(item.category.type === TYPE_OUTCOME) totalOutcome += item.price
-    })
+  // 计算收入和之处总和
+  let totalIncome = 0, totalOutcome = 0;
+  itemsWithCategory.forEach(item => {
+    if (item.category.type === TYPE_INCOME) totalIncome += item.price
+    else if (item.category.type === TYPE_OUTCOME) totalOutcome += item.price
+  })
 
   // ===========================🦈数据交互===================//
   // ？？？？？事件处理函数
@@ -84,16 +88,16 @@ export default function Home() {
     settabView(view)
   }
   const changeDate = (year, month) => {
-    setcurrentDate({year,month})
+    setcurrentDate({ year, month })
   }
 
   // 编辑---只编辑title
   const modifyItem = (modifiedItem) => {
     // 遍历整个数据，找到对应的要更改的数据，然后修改title
     const modifiedItems = itemdb.map((item) => {
-      if(item.id === modifiedItem.id){
-        return {...item, title:'该标题被更新'}
-      }else{
+      if (item.id === modifiedItem.id) {
+        return { ...item, title: '该标题被更新' }
+      } else {
         return item
       }
     })
@@ -120,7 +124,7 @@ export default function Home() {
   //   newlist.splice(index, 1)
   //   setitemdb(newlist)
   // }
-  
+
   // 方法二：采用filter
   const deleteItem = (deletedItem) => {
     // 将不删除的元素筛选出来
@@ -128,9 +132,13 @@ export default function Home() {
     setitemdb(filteredItems)
   }
 
+  // 使用Context
+  const state = useContext(AppContext)
+  console.log(state);
+
   return (
     <>
-      <header className='App-header' style={{backgroundColor:'#bfa'}}>
+      <header className='App-header' style={{ backgroundColor: '#bfa' }}>
         <div className="row mb-5">
           {/* <img src={logo} alt="logo" /> */}
         </div>
@@ -143,7 +151,7 @@ export default function Home() {
             />
           </div>
           <div className="col">
-            <TotalPrice 
+            <TotalPrice
               income={totalIncome}
               outcome={totalOutcome}
             />
@@ -153,6 +161,13 @@ export default function Home() {
 
       <div className="content-area py-3 px-3">
         {/* 模式 */}
+
+        {/* 采用Tabs */}
+        {/* <Tabs activeIndex={0} onTabChange={()=>{}}>
+                  <Tab>1st item</Tab>
+                  <Tab>2st item</Tab>
+                </Tabs> */}
+
         <ViewTab
           activeTab={tabView} onTabChange={changeView}
         />
@@ -162,7 +177,7 @@ export default function Home() {
         />
         {/* 数据列表：根据模式变化 */}
         {
-          tabView === LIST_VIEW && 
+          tabView === LIST_VIEW &&
           <PriceList
             items={itemsWithCategory}
             onModifyItem={modifyItem}
@@ -170,11 +185,12 @@ export default function Home() {
           />
         }
         {
-          tabView === CHART_VIEW && 
+          tabView === CHART_VIEW &&
           <h1>图标区域</h1>
         }
-      </div> 
+      </div>
     </>
+
     // <div>
     //   <PriceList
     //     items={items}

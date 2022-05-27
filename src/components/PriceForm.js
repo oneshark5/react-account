@@ -2,6 +2,13 @@ import React, { useRef, useState } from 'react'
 import { isValidDate } from '../utility'
 
 export default function PriceForm(props) {
+  const defaultProps = {
+    item:{}
+  }
+
+  // 解构
+  const { title, price, date } = props.item
+
   // 定义状态---用以动态改变状态给出提示信息
   const [validatePass, setvalidatePass] = useState(true)//判断输入内容是否正确
   const [errorMessage, seterrorMessage] = useState('')//给定错误提示信息
@@ -26,6 +33,7 @@ export default function PriceForm(props) {
     const editMode = !!item.id
     // 使用ref所获得的值---🦈
     const price = titleInputRef.current.value
+    console.log(price);
     const date = dateInputRef.current.value
     const title = titleInputRef.current.value
 

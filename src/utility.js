@@ -44,10 +44,12 @@ export const isValidDate = (dateString) => {
 }
 
 // 将数组铺平flattern---reduce()方法；reduce(prvVal, curVal)
-export const flattern = {
-  
+export const flatternArr = (arr) => {
+  return arr.reduce((map, item) => {
+    map[item.id] = item
+    return map
+  }, {})
 }
-
 export const Colors = {
   blue: '#347eff',
   deepBlue: '#61dafb',

@@ -1,19 +1,126 @@
 {
-  "posts": [
+  "categories": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "id": "1",
+      "name": "旅游",
+      "type": "outcome",
+      "iconName": "cable-car"
+    },
+    {
+      "id": "2",
+      "name": "餐饮",
+      "type": "outcome",
+      "iconName": "bowl-hot"
+    },
+    {
+      "id": "3",
+      "name": "购物",
+      "type": "outcome",
+      "iconName": "cart-download"
+    },
+    {
+      "id": "4",
+      "name": "数码",
+      "type": "outcome",
+      "iconName": "camera"
+    },
+    {
+      "id": "5",
+      "name": "交通",
+      "type": "outcome",
+      "iconName": "camera"
+    },
+    {
+      "id": "6",
+      "name": "娱乐",
+      "type": "outcome",
+      "iconName": "camera"
+    },
+    {
+      "id": "7",
+      "name": "汽车",
+      "type": "outcome",
+      "iconName": "camera"
+    },
+    {
+      "id": "8",
+      "name": "医疗",
+      "type": "outcome",
+      "iconName": "camera"
+    },
+    {
+      "id": "9",
+      "name": "宠物",
+      "type": "outcome",
+      "iconName": "camera"
+    },
+    {
+      "id": "10",
+      "name": "工资",
+      "type": "income",
+      "iconName": "camera"
+    },
+    {
+      "id": "11",
+      "name": "兼职",
+      "type": "income",
+      "iconName": "camera"
+    },
+    {
+      "id": "12",
+      "name": "理财",
+      "type": "income",
+      "iconName": "camera"
+    },
+    {
+      "id": "13",
+      "name": "其他",
+      "type": "income",
+      "iconName": "camera"
     }
   ],
-  "comments": [
+  "items": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": "1",
+      "cid": 3,
+      "title": "美妆",
+      "price": 500,
+      "monthCategory": "2022-05",
+      "date": "2022-05-25",
+      "timestamp": 1653436800000
+    },
+    {
+      "id": "_qmatbbwq0",
+      "cid": 6,
+      "title": "吃饭",
+      "price": 1500,
+      "monthCategory": "2022-05",
+      "date": "2022-05-26",
+      "timestamp": 1653523200000
+    },
+    {
+      "title": "理财",
+      "price": 2000,
+      "date": "2022-05-27",
+      "monthCategory": "2022-05",
+      "id": "_fghjklwws",
+      "cid": 12,
+      "timestamp": 1653609600000
+    },
+    {
+      "id": "7AhuUEW"
+    },
+    {
+      "id": "T8gveCW"
+    },
+    {
+      "title": "喝茶",
+      "price": 200,
+      "date": "2022-05-29",
+      "monthCategory": "2022-05",
+      "id": "_fghjkls34",
+      "cid": 2,
+      "timestamp": 1653782400000
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

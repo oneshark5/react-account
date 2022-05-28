@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CategorySelect from '../components/CategorySelect'
 // import { Tabs, Tab } from '../components/Tabs'
@@ -27,6 +27,10 @@ function Create(props) {
   const { states, actions } = useContext(AppContext)
   // 对取出的数据进行解构
   const { items, categories } = states
+
+  useEffect(() => {
+    actions.getEditData(params.id)
+  },[])
 
    // 定义状态
    const TYPE = (params.id && items[params.id]) ? categories[items[params.id].cid].type : TYPE_OUTCOME

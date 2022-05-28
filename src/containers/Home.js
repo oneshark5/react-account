@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { TYPE_INCOME, TYPE_OUTCOME, LIST_VIEW, CHART_VIEW, parseToYearAndMonth, padLeft } from '../utility'
 
@@ -8,7 +8,7 @@ import ViewTab from '../components/ViewTab'
 import MonthPicker from '../components/MonthPicker'
 import TotalPrice from '../components/TotalPrice'
 import CreateBtn from '../components/CreateBtn'
-
+import Loader from '../components/Loader'
 import { AppContext } from '../App'
 import { useNavigate } from 'react-router-dom'
 import Tab from '../components/Tab'
@@ -17,16 +17,24 @@ import Tabs from '../components/Tabs'
 
 const Home = (props) => {
   const tabsText = [LIST_VIEW, CHART_VIEW]
+  // 使用Context---useContext方法
+  const { states, actions } = useContext(AppContext)
+  const { items, categories } = states
+  // const { deleteItem } = actions
+  const { isLoading } = useContext(AppContext)
+
   // 定义状态
   const [currentDate, setcurrentDate] = useState(parseToYearAndMonth('2022/05/27'))//注意：在测试时，把这个初始时间写死，以防测试时每次都不同
   const [tabView, settabView] = useState(tabsText[0])
 
   const navigate = useNavigate()
 
-  // 使用Context---useContext方法
-  const { states, actions } = useContext(AppContext)
-  const {items, categories} = states
-  // const { deleteItem } = actions
+  useEffect(() => {
+    actions.getInitalData().then(items => {
+      console.log('hah',items);
+    })
+  }, [])
+
   // 数据处理
   const itemsWithCategory = Object.keys(items).map(id => {
     items[id].category = categories[items[id].cid]
@@ -59,7 +67,6 @@ const Home = (props) => {
   }
 
   const createItem = () => {
-
     navigate('/create')
   }
 
@@ -116,48 +123,56 @@ const Home = (props) => {
 
       <div className="content-area py-3 px-3">
 
-        {/* Tabs示范 */}
-        <Tabs acctiveIndex={0} onTabChange={changeView}>
-          <Tab>
-            <box-icon name='list-ul'
-              className="rounded-circle mr-2"
-              type='solid' color='#28a745'
-              size='22px' pull="left"
-            ></box-icon>
-            列表模式
-          </Tab>
-          <Tab>
-            <box-icon name='pie-chart'
-              className="rounded-circle mr-4"
-              type='solid' color='#28a745'
-              size='22px' pull="left"
-            ></box-icon>
-            图表模式
-          </Tab>
-        </Tabs>
+        {
+          isLoading && <Loader />
+        }
+        {
+          !isLoading &&
+          <React.Fragment>
+            {/* Tabs示范 */}
+            <Tabs acctiveIndex={0} onTabChange={changeView}>
+              <Tab>
+                <box-icon name='list-ul'
+                  className="rounded-circle mr-2"
+                  type='solid' color='#28a745'
+                  size='22px' pull="left"
+                ></box-icon>
+                列表模式
+              </Tab>
+              <Tab>
+                <box-icon name='pie-chart'
+                  className="rounded-circle mr-4"
+                  type='solid' color='#28a745'
+                  size='22px' pull="left"
+                ></box-icon>
+                图表模式
+              </Tab>
+            </Tabs>
 
-        {/* 创建按钮 */}
-        <CreateBtn
-          onClick={createItem}
-        />
-        {/* 数据列表：根据模式变化 */}
-        {
-          tabView === LIST_VIEW && itemsWithCategory.length > 0 &&
-          <PriceList
-            items={itemsWithCategory}
-            onModifyItem={modifyItem}
-            onDeleteItem={deleteItem}
-          />
-        }
-        {
-          tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
-          <div className='alert alert-light text-center'>
-            您还没有任何记账记录
-          </div>
-        }
-        {
-          tabView === CHART_VIEW &&
-          <h1 className='chart-title'>图表区域</h1>
+            {/* 创建按钮 */}
+            <CreateBtn
+              onClick={createItem}
+            />
+            {/* 数据列表：根据模式变化 */}
+            {
+              tabView === LIST_VIEW && itemsWithCategory.length > 0 &&
+              <PriceList
+                items={itemsWithCategory}
+                onModifyItem={modifyItem}
+                onDeleteItem={deleteItem}
+              />
+            }
+            {
+              tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
+              <div className='alert alert-light text-center'>
+                您还没有任何记账记录
+              </div>
+            }
+            {
+              tabView === CHART_VIEW &&
+              <h1 className='chart-title'>图表区域</h1>
+            }
+          </React.Fragment>
         }
       </div>
     </React.Fragment>

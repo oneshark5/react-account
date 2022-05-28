@@ -6,10 +6,11 @@ import Tabs from '../components/Tabs'
 import Tab from '../components/Tab'
 import { AppContext } from '../App'
 import { testCategories, testItems } from '../testDate'
-import { TYPE_OUTCOME } from '../utility'
+import { TYPE_INCOME, TYPE_OUTCOME } from '../utility'
 import PriceForm from '../components/PriceForm'
 import { useNavigate } from 'react-router-dom'
 
+const tabsText = [TYPE_INCOME, TYPE_OUTCOME]
 
 function Create(props) {
 
@@ -24,11 +25,7 @@ function Create(props) {
   const { states, actions } = useContext(AppContext)
   // 对取出的数据进行解构
   const { items, categories } = states
-  // 按分类提取
-  
-
-
-  // 获取id
+  // 按分类提取   获取id
   const params = useParams()
   // const filterCategories = testCategories.filter(category => category.type === TYPE_OUTCOME)
   const filterCategories = Object.keys(categories)
@@ -36,9 +33,10 @@ function Create(props) {
     .map(id => categories[id])
 
   // 事件处理函数
-  // const tabChange = (index) => {
-  //   setselectedTab(tabsText[index])
-  // }
+  // 根据tab改变，类型切换
+  const tabChange = (index) => {
+    setselectedTab(tabsText[index])
+  }
   const selectCategory = (category) => {
     setselectedCategory(category)
   }
@@ -47,58 +45,49 @@ function Create(props) {
   }
 
   const submitForm = (data, isEditMode) => {
-  //   // if (!selectedCategory) {
-  //   //   this.setState({
-  //   //     validationPassed: false
-  //   //   })
-  //   //   return
-  //   // }
-  //   if (!isEditMode) {
-  //     // 检查是否选择分类
-  //     if (!selectedCategory) {
-  //       setvalidationPassed(false)
-  //       return
-  //     }
-  //     // create
-  //     actions.createItem(data, selectedCategory.id).then(navigateToHome)
-  //   } else {
-  //     // update 
-  //     actions.updateItem(data, selectedCategory.id).then(navigateToHome)
-  //   }
-  // }
-  // const navigateToHome = () => {
-  //   navigate('/')
+    //   // if (!selectedCategory) {
+    //   //   this.setState({
+    //   //     validationPassed: false
+    //   //   })
+    //   //   return
+    //   // }
+    //   if (!isEditMode) {
+    //     // 检查是否选择分类
+    //     if (!selectedCategory) {
+    //       setvalidationPassed(false)
+    //       return
+    //     }
+    //     // create
+    //     actions.createItem(data, selectedCategory.id).then(navigateToHome)
+    //   } else {
+    //     // update 
+    //     actions.updateItem(data, selectedCategory.id).then(navigateToHome)
+    //   }
+    // }
+    // const navigateToHome = () => {
+    //   navigate('/')
   }
 
 
   return (
-    <AppContext.Consumer>
-      {
-        (state) => {
-          console.log(state)
-          return (
-            <div className='create-page py-3 px-3 rounded mt-3' style={{ background: '#fff' }}>
-              {/* 采用了插槽 */}
-              <Tabs activeIndex={0} onTabChange={() => { }}>
-                <Tab>支出</Tab>
-                <Tab>收入</Tab>
-              </Tabs>
+    <div className='create-page py-3 px-3 rounded mt-3' style={{ background: '#fff' }}>
+      {/* 采用了插槽 */}
+      <Tabs activeIndex={0} onTabChange={tabChange}>
+        <Tab>支出</Tab>
+        <Tab>收入</Tab>
+      </Tabs>
 
-              <CategorySelect
-                categories={filterCategories}
-                onSelectCategory={selectCategory}
-              />
+      <CategorySelect
+        categories={filterCategories}
+        onSelectCategory={selectCategory}
+      />
 
-              <PriceForm
-                onFormSubmit={submitForm}
-                onCancelSubmit={cancelSubmit}
-                item={testItems}
-              />
-            </div>
-          )
-        }
-      }
-    </AppContext.Consumer>
+      <PriceForm
+        onFormSubmit={submitForm}
+        onCancelSubmit={cancelSubmit}
+        item={testItems}
+      />
+    </div>
   )
 }
 

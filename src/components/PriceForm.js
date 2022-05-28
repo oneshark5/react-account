@@ -25,7 +25,7 @@ export default function PriceForm(props) {
    */
   const sumbitForm = (event) => {
     // 清除表单默认事件
-    event.preventDefault()
+    // event.preventDefault()
 
     // 解构---父组件Create会传过来三个属性
     const { item, onFormSubmit } = props
@@ -33,7 +33,6 @@ export default function PriceForm(props) {
     const editMode = !!item.id
     // 使用ref所获得的值---🦈
     const price = titleInputRef.current.value
-    console.log(price);
     const date = dateInputRef.current.value
     const title = titleInputRef.current.value
 

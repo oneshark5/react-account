@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Home from './containers/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { testItems, testCategories } from './testDate'
-import { flatternArr } from './utility'
+import { flatternArr, ID, parseToYearAndMonth } from './utility'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Create from './containers/Create'
@@ -29,9 +29,30 @@ export default function App() {
       console.log(item);
       console.log(states.items);
     },
+    // 创建新数据
     createItem:(data, categoryId) => {
       console.log(data);
       console.log(categoryId);
+      // 生成新的id
+      const newId = ID()
+      const parsedDate = parseToYearAndMonth(data.date)
+      data.monthCategory = `${parsedDate.year}-${parsedDate.month}`
+      data.timestamp = new Date(data.date).getTime()
+      const newItem = {...data, id:newId, cid:categoryId}
+      setstates({
+        items:{...states.items, [newId]:newItem}
+      })
+    },
+    // 更新
+    updateItem: (item, updatedCategoryID) =>{
+      const modifedItem = {
+        ...item,
+        cid:updatedCategoryID,
+        timestamp:new Date(item.date).getTime()
+      }
+      setstates({
+        items:{...states.items, [modifedItem.id] : modifedItem}
+      })
     }
 
   }

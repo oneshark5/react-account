@@ -18,14 +18,16 @@ export default function App() {
     items:flatternArr(testItems),
     categories:flatternArr(testCategories)
   })
-  console.log(states.items);
+  
 
   // 删除变量
   const actions = {
     // const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
     // setitemdb(filteredItems)
     deleteItem:(item) => {
-
+      // 该方法好像不能删除元素
+      console.log(item);
+      console.log(states.items);
     },
     createItem:(data, categoryId) => {
       console.log(data);

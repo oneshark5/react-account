@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-// import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import CategorySelect from '../components/CategorySelect'
 // import { Tabs, Tab } from '../components/Tabs'
 import Tabs from '../components/Tabs'
@@ -20,10 +20,14 @@ function Create(props) {
   // 重定向
   const navigate = useNavigate()
 
-  // 使用Context---useContext方法
+  // 使用Context---useContext方法:获取根元素属性
   const { states, actions } = useContext(AppContext)
   // 对取出的数据进行解构
   const { items, categories } = states
+  // 按分类提取
+  
+
+
   // 获取id
   const params = useParams()
   // const filterCategories = testCategories.filter(category => category.type === TYPE_OUTCOME)
@@ -43,27 +47,27 @@ function Create(props) {
   }
 
   const submitForm = (data, isEditMode) => {
-    // if (!selectedCategory) {
-    //   this.setState({
-    //     validationPassed: false
-    //   })
-    //   return
-    // }
-    if (!isEditMode) {
-      // 检查是否选择分类
-      if (!selectedCategory) {
-        setvalidationPassed(false)
-        return
-      }
-      // create
-      actions.createItem(data, selectedCategory.id).then(navigateToHome)
-    } else {
-      // update 
-      actions.updateItem(data, selectedCategory.id).then(navigateToHome)
-    }
-  }
-  const navigateToHome = () => {
-    navigate('/')
+  //   // if (!selectedCategory) {
+  //   //   this.setState({
+  //   //     validationPassed: false
+  //   //   })
+  //   //   return
+  //   // }
+  //   if (!isEditMode) {
+  //     // 检查是否选择分类
+  //     if (!selectedCategory) {
+  //       setvalidationPassed(false)
+  //       return
+  //     }
+  //     // create
+  //     actions.createItem(data, selectedCategory.id).then(navigateToHome)
+  //   } else {
+  //     // update 
+  //     actions.updateItem(data, selectedCategory.id).then(navigateToHome)
+  //   }
+  // }
+  // const navigateToHome = () => {
+  //   navigate('/')
   }
 
 

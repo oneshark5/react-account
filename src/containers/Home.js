@@ -8,9 +8,11 @@ import ViewTab from '../components/ViewTab'
 import MonthPicker from '../components/MonthPicker'
 import TotalPrice from '../components/TotalPrice'
 import CreateBtn from '../components/CreateBtn'
-import { Tabs, Tab } from './components/Tabs'
+
 import { AppContext } from '../App'
 import { useNavigate } from 'react-router-dom'
+import Tab from '../components/Tab'
+import Tabs from '../components/Tabs'
 
 
 const Home = (props) => {
@@ -21,25 +23,27 @@ const Home = (props) => {
 
   const navigate = useNavigate()
 
-  // // 使用Context---useContext方法
-  // const { states, actions } = useContext(AppContext)
-  // const [items, categories] = states
-  // // 数据处理
-  // const itemsWithCategory = Object.keys(items).map(id => {
-  //   items[id].category = categories[items[id].cid]
-  //   return items[id]
-  // }).filter(item => {
-  //   return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
-  // })
-  // // 计算收入和支出总和
-  // let totalIncome = 0, totalOutcome = 0
-  // itemsWithCategory.forEach(item => {
-  //   if (item.category.type === TYPE_OUTCOME) {
-  //     totalOutcome += item.price
-  //   } else {
-  //     totalIncome += item.price
-  //   }
-  // })
+  // 使用Context---useContext方法
+  const { states, actions } = useContext(AppContext)
+  const {items, categories} = states
+  // const { deleteItem } = actions
+  // 数据处理
+  const itemsWithCategory = Object.keys(items).map(id => {
+    items[id].category = categories[items[id].cid]
+    return items[id]
+  }).filter(item => {
+    return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
+  })
+  // 计算收入和支出总和
+  let totalIncome = 0, totalOutcome = 0
+  itemsWithCategory.forEach(item => {
+    if (item.category.type === TYPE_OUTCOME) {
+      totalOutcome += item.price
+    } else {
+      totalIncome += item.price
+    }
+  })
+
   // ===========================🦈数据交互===================//
   // ？？？？？事件处理函数
   // 实现列表模式
@@ -59,6 +63,10 @@ const Home = (props) => {
     navigate('/create')
   }
 
+  const deleteItem = (item) => {
+    actions.deleteItem(item)
+  }
+
   // 删除数据：两种方法，一是采用splice，二是采用函数式的方法
   // 方法一:需要知道传过来的是第一个数据，但是这里仅传入了数据
   // const deleteItem = (deletedItem) => {
@@ -75,13 +83,13 @@ const Home = (props) => {
   // }
 
   // 方法二：采用filter
-  const deleteItem = (item) => {
-    // // 将不删除的元素筛选出来
-    // const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
-    // setitemdb(filteredItems)
-    console.log(item);
-    actions.deleteItem(item)
-  }
+  // const deleteItem = (item) => {
+  //   // // 将不删除的元素筛选出来
+  //   // const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
+  //   // setitemdb(filteredItems)
+  //   console.log(item);
+  //   actions.deleteItem(item)
+  // }
 
   return (
     <React.Fragment>
@@ -107,16 +115,26 @@ const Home = (props) => {
       </header>
 
       <div className="content-area py-3 px-3">
-        
-        {/* Tabs示范 */}
-        <Tabs acctiveIndex={0} onTabChange={() => {}}>
-          <Tab>1st item</Tab>
-          <Tab>2st item</Tab>
-        </Tabs>
 
-        <ViewTab
-          activeTab={tabView} onTabChange={changeView}
-        />
+        {/* Tabs示范 */}
+        <Tabs acctiveIndex={0} onTabChange={changeView}>
+          <Tab>
+            <box-icon name='list-ul'
+              className="rounded-circle mr-2"
+              type='solid' color='#28a745'
+              size='22px' pull="left"
+            ></box-icon>
+            列表模式
+          </Tab>
+          <Tab>
+            <box-icon name='pie-chart'
+              className="rounded-circle mr-4"
+              type='solid' color='#28a745'
+              size='22px' pull="left"
+            ></box-icon>
+            图表模式
+          </Tab>
+        </Tabs>
 
         {/* 创建按钮 */}
         <CreateBtn

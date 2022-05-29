@@ -106,29 +106,6 @@
       "id": "_fghjklwws",
       "cid": 12,
       "timestamp": 1653609600000
-    },
-    {
-      "id": "7AhuUEW"
-    },
-    {
-      "id": "T8gveCW"
-    },
-    {
-      "title": "喝茶",
-      "price": "喝茶",
-      "date": "2022-05-29",
-      "monthCategory": "2022-05",
-      "id": "_fghjkls34",
-      "cid": "4",
-      "timestamp": 1653782400000
-    },
-    {
-      "title": "测试",
-      "price": "测试",
-      "date": "2022-05-29",
-      "monthCategory": "2022-5",
-      "timestamp": 1653782400000,
-      "id": "_iaymi2rnf"
     }
   ]
 }

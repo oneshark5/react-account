@@ -13,10 +13,10 @@ import { useNavigate } from 'react-router-dom'
 const tabsText = [TYPE_INCOME, TYPE_OUTCOME]
 
 function Create(props) {
-    // 使用Context---useContext方法:获取根元素属性
-    const { states, actions } = useContext(AppContext)
-    // 对取出的数据进行解构
-    const { items, categories } = states
+  // 使用Context---useContext方法:获取根元素属性
+  const { states, actions } = useContext(AppContext)
+  // 对取出的数据进行解构
+  const { items, categories } = states
 
   // ===========================⭐编辑页面⭐============
   // 获取路径参数id值---获取id
@@ -24,21 +24,27 @@ function Create(props) {
   const editItem = (params.id && items[params.id]) ? items[params.id] : {}
   // 分类信息和tab高亮
 
-  
+
   // 重定向
   const navigate = useNavigate()
 
   useEffect(() => {
-    actions.getEditData(params.id)
-  },[])
+    actions.getEditData(params.id).then(data => {
+      const { editItem, categories } = data
+      const TYPE = (params.id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME
+      const CATE = (params.id && editItem) ? categories[editItem.cid] : null
+      setselectedTab(TYPE)
+      setselectedCategory(CATE)
+    })
+  }, [])
 
-   // 定义状态
-   const TYPE = (params.id && items[params.id]) ? categories[items[params.id].cid].type : TYPE_OUTCOME
-   const CATE = (params.id && items[params.id]) ? categories[items[params.id].cid] : null
-   const [selectedTab, setselectedTab] = useState(TYPE)
-   const [selectedCategory, setselectedCategory] = useState(CATE)
+  // 定义状态
+  const TYPE = (params.id && items[params.id]) ? categories[items[params.id].cid].type : TYPE_OUTCOME
+  const CATE = (params.id && items[params.id]) ? categories[items[params.id].cid] : null
+  const [selectedTab, setselectedTab] = useState(TYPE)
+  const [selectedCategory, setselectedCategory] = useState(CATE)
 
-   const tabIndex = tabsText.findIndex(text => text === selectedTab)
+  const tabIndex = tabsText.findIndex(text => text === selectedTab)
 
 
   // 按分类提取 
@@ -61,16 +67,16 @@ function Create(props) {
   }
 
   const submitForm = (data, isEditMode) => {
-    if (!selectedCategory) {
-      this.setState({
-        validationPassed: false
-      })
-      return
-    }
+    // if (!selectedCategory) {
+    //   this.setState({
+    //     validationPassed: false
+    //   })
+    //   return
+    // }
     console.log(data);
     if (!isEditMode) {
-      actions.createItem(data, setselectedCategory.id).then(navigateToHome)
-    }else{
+      actions.createItem(data, selectedCategory.id).then(navigateToHome)
+    } else {
       actions.updateItem(data, selectedCategory.id).then(navigateToHome)
     }
     const navigateToHome = () => {

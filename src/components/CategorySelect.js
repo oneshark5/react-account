@@ -5,10 +5,7 @@ import PropTypes from 'prop-types'
 export default function CategorySelect(props) {
   // 解构
   const { categories, selectedCategory } = props
-  const selectCategoryId = selectedCategory && selectedCategory.id
-
-  // 定义状态
-  const [selectedCategoryId, setselectedCategoryId] = useState(selectCategoryId)
+  const selectedCategoryId = selectedCategory && selectedCategory.id
 
   // 添加事件处理函数
   const selectCategory = (event, category) => {
@@ -28,15 +25,14 @@ export default function CategorySelect(props) {
             ? 'category-item col-3 active' : 'category-item col-3'
             
             return (
-              <div className='category-item col-3' key={index} role='button' style={{textAlign:'center'}}
+              <div className={activeClassName} key={index} role='button' style={{textAlign:'center'}}
                 onClick={(event) => {selectCategory(event, category)}}
               >
                 <box-icon name={category.iconName}
                   style={{backgroundColor:backColor, padding:'5px'}}
                   className="rounded-circle"
-                  type='solid' size='25px' color='#28a745'
+                  type='solid' size='25px' color='iconColor'
                 />
-                
                 <p>{category.name}</p>
               </div>
             )

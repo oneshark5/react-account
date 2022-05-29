@@ -57,10 +57,12 @@ export default function App() {
           categories:flatternArr(categories.data),
           items:{...states.items, [id]:editItem.data}
         })
+        setisLoading(false)
       }else{
         setstates({
           categories:flatternArr(categories.data)
         })
+        setisLoading(false)
       }
       return {
         categories:flatternArr(categories.data),
@@ -93,7 +95,7 @@ export default function App() {
       // }
     },
     // 创建新数据
-    createItem:(data, categoryId) => {
+    createItem: withLoading(async (data, categoryId) => {
       console.log(data);
       console.log(categoryId);
       // 生成新的id
@@ -101,22 +103,28 @@ export default function App() {
       const parsedDate = parseToYearAndMonth(data.date)
       data.monthCategory = `${parsedDate.year}-${parsedDate.month}`
       data.timestamp = new Date(data.date).getTime()
-      const newItem = {...data, id:newId, cid:categoryId}
+      // const newItem = {...data, id:newId, cid:categoryId}
+      const newItem = await  axios.post('/items', { ...data, id: newId, cid: categoryId })
       setstates({
-        items:{...states.items, [newId]:newItem}
+        items:{...states.items, [newId]:newItem.data}
       })
-    },
+      setisLoading(false)
+      return newItem.data
+    }),
     // 更新
-    updateItem: (item, updatedCategoryID) =>{
-      const modifedItem = {
+    updateItem:withLoading( async (item, updatedCategoryID) =>{
+      const modifiedItem = {
         ...item,
         cid:updatedCategoryID,
         timestamp:new Date(item.date).getTime()
       }
+      const updatedItem = await axios.put(`/items/${modifiedItem.id}`, modifiedItem)
       setstates({
-        items:{...states.items, [modifedItem.id] : modifedItem}
+        items:{...states.items, [modifiedItem.id] : modifiedItem}
       })
-    }
+      setisLoading(false)
+      return updatedItem.data
+    })
 
   }
 

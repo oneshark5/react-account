@@ -13,20 +13,20 @@ import { useNavigate } from 'react-router-dom'
 const tabsText = [TYPE_INCOME, TYPE_OUTCOME]
 
 function Create(props) {
+    // 使用Context---useContext方法:获取根元素属性
+    const { states, actions } = useContext(AppContext)
+    // 对取出的数据进行解构
+    const { items, categories } = states
+
   // ===========================⭐编辑页面⭐============
   // 获取路径参数id值---获取id
   const params = useParams()
-  console.log(params.id);//未定义，因为路径中没用获得
   const editItem = (params.id && items[params.id]) ? items[params.id] : {}
   // 分类信息和tab高亮
 
+  
   // 重定向
   const navigate = useNavigate()
-
-  // 使用Context---useContext方法:获取根元素属性
-  const { states, actions } = useContext(AppContext)
-  // 对取出的数据进行解构
-  const { items, categories } = states
 
   useEffect(() => {
     actions.getEditData(params.id)

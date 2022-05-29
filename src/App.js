@@ -34,7 +34,7 @@ export default function App() {
     getInitalData: withLoading(async () => {
       // 只取当前月份的数据
       const {currentDate} = states
-      console.log(currentDate);
+      // console.log(currentDate);
       const getURLWithData = `/items?monthCategory=${currentDate.year}-${padLeft(currentDate.month)}&_sort=timestamp&_order=desc`
       const results = await Promise.all([axios.get('/categories'), axios.get(getURLWithData)])
       const [categories, items] = results
@@ -71,13 +71,26 @@ export default function App() {
     // const filteredItems = itemdb.filter(item => item.id !== deletedItem.id)
     // setitemdb(filteredItems)
     deleteItem:async (item) => {
-      const deleteItem = await axios.delete(`/states.items/${item.id}`)
-      // 该方法好像不能删除元素
+      alert("确定要删除该条数据？？？"+item.title)
+      // const deleteItem = await axios.delete(`/states.items/${item.id}`)
+      // let strid = item.id
+      // console.log(typeof(strid));//这俩可以
       // console.log(item);
       // console.log(states.items);
+      // console.log(states.items.strid);
       // console.log(item.id)
-      // console.log(states.items.length);
-      return deleteItem
+      // console.log(Object.keys(states.items));//这俩可以
+      // // return deleteItem
+
+      // for(let itemsid in states.items){
+      //   console.log(itemsid);
+      //   console.log(states.items);
+      //   const filteredItems = states.items.filter(item => item.id !== deletedItem.id)
+      //   // const filteredItems = states.items.filter(item => item.id !== deletedItem.id)
+      //   setstates({
+      //     items:filteredItems
+      //   })
+      // }
     },
     // 创建新数据
     createItem:(data, categoryId) => {

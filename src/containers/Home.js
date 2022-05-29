@@ -31,7 +31,7 @@ const Home = (props) => {
 
   useEffect(() => {
     actions.getInitalData().then(items => {
-      console.log('hah',items);
+      // console.log('hah',items);
     })
   }, [])
 
@@ -61,15 +61,13 @@ const Home = (props) => {
   const changeDate = (year, month) => {
     setcurrentDate({ year, month })
   }
-
-  const modifyItem = (item) => {
-    navigate(`/edit/${item.id}`)
-  }
-
   const createItem = () => {
     navigate('/create')
   }
 
+  const modifyItem = (item) => {
+    navigate(`/edit/${item.id}`)
+  }
   const deleteItem = (item) => {
     actions.deleteItem(item)
   }

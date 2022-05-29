@@ -34,10 +34,9 @@ export default function App() {
     getInitalData: withLoading(async () => {
       // 只取当前月份的数据
       const {currentDate} = states
-      console.log();
+      console.log(currentDate);
       const getURLWithData = `/items?monthCategory=${currentDate.year}-${padLeft(currentDate.month)}&_sort=timestamp&_order=desc`
       const results = await Promise.all([axios.get('/categories'), axios.get(getURLWithData)])
-
       const [categories, items] = results
       setstates({
         items:flatternArr(items.data),
@@ -58,12 +57,10 @@ export default function App() {
           categories:flatternArr(categories.data),
           items:{...states.items, [id]:editItem.data}
         })
-        setisLoading(false)
       }else{
         setstates({
           categories:flatternArr(categories.data)
         })
-        setisLoading(false)
       }
       return {
         categories:flatternArr(categories.data),
